@@ -8,8 +8,8 @@ class Exercise(db.Model):
     __tablename__ = 'exercises'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    category = db.Column(db.String)
+    name = db.Column(db.String, nullable=False)
+    category = db.Column(db.String, nullable=False)
     equipment_needed = db.Column(db.Boolean)
 
     # Relationship mapping workout exercises to exercise
@@ -26,7 +26,7 @@ class Workout(db.Model):
     __tablename__ = 'workouts'
     
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.DateTime)
+    date = db.Column(db.DateTime, nullable=False)
     duration_minutes = db.Column(db.Integer)
     notes = db.Column(db.String)
 

@@ -10,6 +10,9 @@ class Exercise(db.Model):
     category = db.Column(db.String)
     equipment_needed = db.Column(db.Boolean)
 
+    def __repr__(self):
+        return f'<Exercise {self.id}, {self.name}, {self.category}, {self.equipment_needed}>'
+
 
 class Workout(db.Model):
     __tablename__ = 'workouts'
@@ -18,6 +21,9 @@ class Workout(db.Model):
     date = db.Column(db.DateTime)
     duration_minutes = db.Column(db.Integer)
     notes = db.Column(db.String)
+
+    def __repr__(self):
+        return f'<Workout {self.id}, {self.date}, {self.duration_minutes}, {self.notes}>'
 
 
 class WorkoutExercises(db.Model):

@@ -27,7 +27,7 @@ def get_exercise(id):
 
 # Route to get a exercise's workout 
 @app.route('/exercises/<int:id>/workout')
-def get_workout_exercises(id):
+def get_exercises_workout(id):
     pass
     
 # Route to get all workouts

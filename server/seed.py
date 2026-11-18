@@ -17,14 +17,16 @@ with app.app_context():
 	exercise3 = Exercise(name="Squat", category="Legs", equipment_needed=False)
 	exercise4 = Exercise(name="Bicep Curl", category="Arms", equipment_needed=True)
 	exercise5 = Exercise(name="Crunch", category="Abs", equipment_needed=False)
-	db.session.add_all([exercise1, exercise2, exercise3, exercise4, exercise5])
+	exercise6 = Exercise(name="Test", category="TEST", equipment_needed=False)
+	db.session.add_all([exercise1, exercise2, exercise3, exercise4, exercise5, exercise6])
 	db.session.commit()
 
 	# Create Workouts
 	workout1 = Workout(date=datetime.datetime(2026, 11, 6), duration_minutes=65, notes="Workout went really well. I feel refreshed")
 	workout2 = Workout(date=datetime.datetime(2026, 10, 21), duration_minutes=15, notes="Workout was short today, but at least I go something in!")
 	workout3 = Workout(date=datetime.datetime(2026, 10, 23), duration_minutes=90, notes="Long workout today, had to make up for the other day!")
-	db.session.add_all([workout1, workout2, workout3])
+	workout4 = Workout(date=datetime.datetime(9999, 1, 1), duration_minutes=999, notes="TEST")
+	db.session.add_all([workout1, workout2, workout3, workout4])
 	db.session.commit()
 
 	# Create WorkoutExercises

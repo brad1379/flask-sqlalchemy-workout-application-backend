@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_migrate import Migrate
 
 from models import *
@@ -52,11 +52,18 @@ def get_exercise(id):
         error_message = {"error": f"Exercise id: {id} not found."}
         return jsonify(error_message), 404
 
-# TODO: DELETE WORKOUT
 # DELETE - Route to delete a workout
 @app.route('/exercises/<int:id>', methods=['DELETE'])
 def delete_exercise(id):
-    pass
+    exercise = Exercise.query.filter_by(id=id).first()
+    if exercise:
+        db.session.delete(exercise)
+        db.session.commit()
+        message = {"Success": f"You deleted the exercise id: {id}"}
+        return jsonify(message), 200
+    else: 
+        error_message = {"error": f"Exercise id: {id} does not exist."}
+        return jsonify(error_message), 404
 
 # Route to GET an exercise's workout 
 @app.route('/exercises/<int:id>/workout', methods=['GET'])
@@ -117,11 +124,18 @@ def get_workout(id):
         error_message = {"error": f"Workout id: {id} not found."}
         return jsonify(error_message), 404
 
-# TODO: DELETE WORKOUT
 # DELETE - Route to delete a workout by an ID
 @app.route('/workouts/<int:id>', methods=['DELETE'])
 def delete_workout(id):
-    pass
+    workout = Workout.query.filter_by(id=id).first()
+    if workout:
+        db.session.delete(workout)
+        db.session.commit()
+        message = {"Success": f"You deleted the workout id: {id}"}
+        return jsonify(message), 200
+    else: 
+        error_message = {"error": f"Workout id: {id} does not exist."}
+        return jsonify(error_message), 404
 
 # TODO: ADD AN EXERCISE TO A WORKOUT
 # POST - Route to add an exercise to a workout

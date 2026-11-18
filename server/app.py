@@ -15,34 +15,54 @@ db.init_app(app)
 def index():
     return "Workout Application Backend"
 
-# Route to get all exercises
+# Route to GET all exercises
 @app.route('/exercises')
 def get_exercises():
     pass
 
-# Route to get an exercise by an ID
+# POST - Route to add exercise
+@app.route('/exercises')
+def add_exercise():
+    pass
+
+# Route to GET an exercise by an ID
 @app.route('/exercises/<int:id>')
 def get_exercise(id):
     pass
 
-# Route to get a exercise's workout 
+# DELETE - Route to delete a workout
+@app.route('/exercises/<int:id>')
+def delete_exercise(id):
+    pass
+
+# Route to GET a exercise's workout 
 @app.route('/exercises/<int:id>/workout')
 def get_exercises_workout(id):
     pass
     
-# Route to get all workouts
+# Route to GET all workouts
 @app.route('/workouts')
 def get_workouts():
     pass
 
-# Route to get an workout by an ID
+# POST - Route to add workout
+@app.route('/workouts')
+def add_workout():
+    pass
+
+# Route to GET a workout by an ID
 @app.route('/workouts/<int:id>')
 def get_workout(id):
     pass
 
-# Route to get a workout's exercises 
-@app.route('/workouts/<int:id>/exercises')
-def get_workout_exercises(id):
+# DELETE - Route to delete a workout by an ID
+@app.route('/workouts/<int:id>')
+def delete_workout(id):
+    pass
+
+# POST Route to add an exercise to a workout
+@app.route('/workouts/<int:id>/exercises/<int:id>/workout_exercises')
+def add_workout_exercises(id):
     pass
 
 

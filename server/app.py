@@ -60,8 +60,8 @@ def get_workout(id):
 def delete_workout(id):
     pass
 
-# POST Route to add an exercise to a workout
-@app.route('/workouts/<int:id>/exercises/<int:id>/workout_exercises')
+# POST - Route to add an exercise to a workout
+@app.route('/workouts/<int:workout_id>/exercises/<int:exercise_id>/workout_exercises')
 def add_workout_exercises(id):
     pass
 

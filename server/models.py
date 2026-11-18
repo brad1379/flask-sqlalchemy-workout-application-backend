@@ -30,7 +30,7 @@ class ExerciseSchema(Schema):
     category = fields.Str()
     equipment_needed = fields.Boolean()
 
-    workout_exercises = fields.List(fields.Nested(lambda: WorkoutExercise(exclude=("exercises", "workouts"))))
+    workout_exercises = fields.List(fields.Nested(lambda: WorkoutExerciseSchema(exclude=("exercise",))))
 
 
 # ================================================================================
@@ -61,7 +61,7 @@ class WorkoutSchema(Schema):
     duration_minutes = fields.Int()
     notes = fields.Str()
 
-    workout_exercises = fields.List(fields.Nested(lambda: WorkoutExercise(exclude=("workouts", "exercises"))))
+    workout_exercises = fields.List(fields.Nested(lambda: WorkoutExerciseSchema(exclude=("exercise",))))
 
 
 # ================================================================================
@@ -91,6 +91,9 @@ class WorkoutExerciseSchema(Schema):
     reps = fields.Int()
     sets = fields.Int()
     duration_seconds = fields.Int()
+
+    workout_id = fields.Int()
+    exercise_id = fields.Int()
 
     workout = fields.Nested(WorkoutSchema(exclude=("workout_exercises",)))
     exercise = fields.Nested(ExerciseSchema(exclude=("workout_exercises",)))

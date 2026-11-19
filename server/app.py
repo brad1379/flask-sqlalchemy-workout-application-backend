@@ -13,8 +13,8 @@ db.init_app(app)
 
 @app.route('/')
 def index():
-    return "Workout Application Backend"
-
+    return "<h1>Workout Application Backend</h1> 
+    
 
 # Route to GET all exercises
 @app.route('/exercises', methods=['GET'])
@@ -184,18 +184,18 @@ def add_workout_exercises(workout_id, exercise_id):
         message = {"error": f"No workout exists with id: {workout_id}"}
         return jsonify(message), 404
 
-    else if not exercise_id:
+    elif not exercise_id:
         message = {"error": f"No exercise exists with id: {exercise_id}"}
         return jsonify(message), 404
     else:
         data = request.get_json()
 
         work_ex = WorkoutExercise(
-            "workout_id": workout.id,
-            "exercise_id": exercise.id,
-            "reps": data.reps, 
-            "sets": data.sets,
-            "duation_seconds": data.duration_seconds,
+            workout_id=data.get("workout.id"),
+            exercise_id= data.get("exercise.id"),
+            reps=data.get("reps"), 
+            sets=data.get("sets"),
+            duation_seconds=data.get("duration_seconds"),
         )
         db.session.add(work_ex)
         db.session.commit()

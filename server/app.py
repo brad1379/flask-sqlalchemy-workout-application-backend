@@ -13,7 +13,7 @@ db.init_app(app)
 
 @app.route('/')
 def index():
-    return "<h1>Workout Application Backend</h1>"
+    return "<h1>Workout Application Backend</h1> 
     
 
 # Route to GET all exercises
@@ -32,6 +32,7 @@ def get_exercises():
     return jsonify(exercises), 200
 
 
+# TODO: VERIFY FUNCTIONALITY
 # POST - Route to add exercise
 @app.route('/exercises', methods=['POST'])
 def add_exercise():
@@ -122,6 +123,7 @@ def get_workouts():
     return jsonify(workouts, 200)
 
 
+# TODO: VERIFY FUNCTIONALITY
 # POST - Route to add workout
 @app.route('/workouts', methods=['POST'])
 def add_workout():

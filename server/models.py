@@ -84,6 +84,8 @@ class WorkoutExercise(db.Model):
     # Relationship mapping exercise to workout exercises
     exercise = db.Relationship('Exercise', back_populates="workout_exercises")
 
+    def __repr__(self):
+        return f'<WorkoutExercise {self.id}, {self.reps}, {self.sets}, {self.duration_seconds}>'
 
 # WorkoutExercise Schema   
 class WorkoutExerciseSchema(Schema):
@@ -98,4 +100,4 @@ class WorkoutExerciseSchema(Schema):
     workout = fields.Nested(WorkoutSchema(exclude=("workout_exercises",)))
     exercise = fields.Nested(ExerciseSchema(exclude=("workout_exercises",)))
 
- 
+    

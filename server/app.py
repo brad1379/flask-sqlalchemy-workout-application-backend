@@ -15,6 +15,7 @@ db.init_app(app)
 def index():
     return "Workout Application Backend"
 
+
 # Route to GET all exercises
 @app.route('/exercises', methods=['GET'])
 def get_exercises():
@@ -30,11 +31,27 @@ def get_exercises():
         exercises.append(exercise_dict)
     return jsonify(exercises), 200
 
-# TODO: ADD EXERCISE
+
+# TODO: VERIFY FUNCTIONALITY
 # POST - Route to add exercise
 @app.route('/exercises', methods=['POST'])
 def add_exercise():
-    pass
+    data = request.get_json()
+    if not data:
+        message = {"error": "There is no exercise to add"}
+        return jsonify(message), 404
+
+    new_exercise = Exercise(
+        name=data.get("name"),
+        category=data.get("category"),
+        equipment_needed=data.get("equipment_needed", False) # default to False if not provided
+    )
+
+    db.session.add(new_exercise)
+    db.session.commit()
+    message = {"Success": "You successfully added a new exercise."}
+    return jsonify(message), 200
+
 
 # Route to GET an exercise by an ID
 @app.route('/exercises/<int:id>', methods=['GET'])
@@ -52,6 +69,7 @@ def get_exercise(id):
         error_message = {"error": f"Exercise id: {id} not found."}
         return jsonify(error_message), 404
 
+
 # DELETE - Route to delete a workout
 @app.route('/exercises/<int:id>', methods=['DELETE'])
 def delete_exercise(id):
@@ -64,6 +82,7 @@ def delete_exercise(id):
     else: 
         error_message = {"error": f"Exercise id: {id} does not exist."}
         return jsonify(error_message), 404
+
 
 # Route to GET an exercise's workout 
 @app.route('/exercises/<int:id>/workout', methods=['GET'])
@@ -86,6 +105,7 @@ def get_exercises_workout(id):
     else:
         error_message = {"error": "There are no workouts associated with this exercise or the exercise doesn't exist."}
         return jsonify(error_message), 404
+
     
 # Route to GET all workouts
 @app.route('/workouts', methods=['GET'])
@@ -102,11 +122,26 @@ def get_workouts():
         workouts.append(workout_dict)
     return jsonify(workouts, 200)
 
-# TODO: ADD WORKOUT
+
+# TODO: VERIFY FUNCTIONALITY
 # POST - Route to add workout
 @app.route('/workouts', methods=['POST'])
 def add_workout():
-    pass
+    data = request.get_json()
+    if not data:
+        message = {"error": "There is no workout to add"}
+        return jsonify(message), 404
+    else:
+        new_workout = Workout(
+            date=data.get("date"),
+            duration_minutes=data.get("duration_minutes"),
+            notes=data.get("notes", False)
+        )
+        db.session.add(new_workout)
+        db.session.commit()
+        message = {"Success": "You successfully added a new workout."}
+        return jsonify(message), 200
+
 
 # Route to GET a workout by an ID
 @app.route('/workouts/<int:id>', methods=['GET'])
@@ -124,6 +159,7 @@ def get_workout(id):
         error_message = {"error": f"Workout id: {id} not found."}
         return jsonify(error_message), 404
 
+
 # DELETE - Route to delete a workout by an ID
 @app.route('/workouts/<int:id>', methods=['DELETE'])
 def delete_workout(id):
@@ -137,11 +173,34 @@ def delete_workout(id):
         error_message = {"error": f"Workout id: {id} does not exist."}
         return jsonify(error_message), 404
 
-# TODO: ADD AN EXERCISE TO A WORKOUT
+
+# TODO: VERIFY FUNCTIONALITY
 # POST - Route to add an exercise to a workout
 @app.route('/workouts/<int:workout_id>/exercises/<int:exercise_id>/workout_exercises', methods=['POST'])
 def add_workout_exercises(workout_id, exercise_id):
-    pass
+    workout = Workout.query.get(workout_id)
+    exercise = Exercise.query.get(exercise_id)
+    if not workout:
+        message = {"error": f"No workout exists with id: {workout_id}"}
+        return jsonify(message), 404
+
+    else if not exercise_id:
+        message = {"error": f"No exercise exists with id: {exercise_id}"}
+        return jsonify(message), 404
+    else:
+        data = request.get_json()
+
+        work_ex = WorkoutExercise(
+            "workout_id": workout.id,
+            "exercise_id": exercise.id,
+            "reps": data.reps, 
+            "sets": data.sets,
+            "duation_seconds": data.duration_seconds,
+        )
+        db.session.add(work_ex)
+        db.session.commit()
+        message = {"Success": f"Exercise id: {exercise_id} was added to workout id: {workout_id}."}
+        return jsonify(message), 200
 
 
 if __name__ == '__main__':

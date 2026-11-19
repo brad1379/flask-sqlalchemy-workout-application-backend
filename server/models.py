@@ -11,8 +11,8 @@ class Exercise(db.Model):
     __tablename__ = 'exercises'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
-    category = db.Column(db.String, nullable=False)
+    name = db.Column(db.String(20), nullable=False)
+    category = db.Column(db.String(20), nullable=False)
     equipment_needed = db.Column(db.Boolean, default=False)
 
     # Relationship mapping workout exercises to exercise
@@ -24,10 +24,14 @@ class Exercise(db.Model):
     # Validations
     @validates('name')
     def validate_name(self, key, name):
+        if len(name) > 20:
+            raise ValueError("Exercise name must be 20 characters or less.")
         return name
 
     @validates('category')
     def validate_category(self, key, category):
+        if len(category) > 20:
+            raise ValueError("Category must be 20 characters or less.")
         return category
 
 
@@ -54,7 +58,7 @@ class Workout(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime, nullable=False)
     duration_minutes = db.Column(db.Integer, nullable=False)
-    notes = db.Column(db.String)
+    notes = db.Column(db.String(256))
 
     # Relationship mapping workout exercises to workout
     workout_exercises = db.Relationship('WorkoutExercise', back_populates='workout')
@@ -84,6 +88,8 @@ class Workout(db.Model):
 
     @validates('notes')
     def validate_notes(self, key, notes):
+        if len(notes) > 256: 
+            raise ValueError("Notes must be 256 characters or less.")
         return notes
 
     def __repr__(self):
@@ -123,8 +129,21 @@ class WorkoutExercise(db.Model):
     @validates('reps')
     def validate_reps(self, key, reps):
         if reps < 1 or reps > 20:
-            raise ValueError("Reps must be between more than 1 or less than or equal to 20.")
+            raise ValueError("Reps must be more than 1 or less than or equal to 20.")
         return reps
+
+    @validates('sets')
+    def validate_sets(self, key, sets):
+        if sets < 1 or sets > 10:
+            raise ValueError("Sets must be more than 1 or less than or equal to 10.")
+        return sets
+
+    @validates('duration_seconds')
+    def validate_duration_seconds(self, key, duration_seconds):
+        if duration_seconds < 1 or duration_seconds > 999:
+            raise ValueError("Exercise duration must be more than 1 second or less than 999 seconds.")
+        return duration_seconds
+
 
     def __repr__(self):
         return f'<WorkoutExercise {self.id}, {self.reps}, {self.sets}, {self.duration_seconds}>'

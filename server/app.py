@@ -172,7 +172,6 @@ def delete_workout(id):
         return jsonify(error_message), 404
 
 
-# TODO: VERIFY FUNCTIONALITY
 # POST - Route to add an exercise to a workout
 @app.route('/workouts/<int:workout_id>/exercises/<int:exercise_id>/workout_exercises', methods=['POST'])
 def add_workout_exercises(workout_id, exercise_id):
@@ -189,11 +188,11 @@ def add_workout_exercises(workout_id, exercise_id):
         data = request.get_json()
 
         work_ex = WorkoutExercise(
-            workout_id=data.get("workout.id"),
-            exercise_id= data.get("exercise.id"),
+            workout_id=workout.id,
+            exercise_id=exercise.id,
             reps=data.get("reps"), 
             sets=data.get("sets"),
-            duation_seconds=data.get("duration_seconds"),
+            duration_seconds=data.get("duration_seconds"),
         )
         db.session.add(work_ex)
         db.session.commit()

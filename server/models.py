@@ -24,12 +24,16 @@ class Exercise(db.Model):
     # Validations
     @validates('name')
     def validate_name(self, key, name):
+        if name == "":
+            raise ValueError("Exercise cannot have a blank name.")
         if len(name) > 20:
             raise ValueError("Exercise name must be 20 characters or less.")
         return name
 
     @validates('category')
     def validate_category(self, key, category):
+        if category == "":
+            raise ValueError("Exercise cannot have a blank category.")
         if len(category) > 20:
             raise ValueError("Category must be 20 characters or less.")
         return category
@@ -82,8 +86,10 @@ class Workout(db.Model):
     @validates('duration_minutes')
     # Make sure the workout duration is between 15 mins and 4 hours.
     def validate_duration_minutes(self, key, duration_minutes):
-        if duration_minutes < 5 or duration_minutes > 240:
-            raise ValueError("Workout duration must be between 15 and 240 minutes.")
+        if duration_minutes < 15:
+            raise ValueError("Workout duration must be more than 5 minutes.")
+        if duration_minutes > 240:
+            raise ValueError("Workout duration must be less than 240 minutes.")
         return duration_minutes
 
     @validates('notes')

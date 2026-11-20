@@ -119,7 +119,7 @@ def get_workouts():
             "workout_notes": wkout.notes,
         }
         workouts.append(workout_dict)
-    return jsonify(workouts, 200)
+    return jsonify(workouts), 200
 
 
 # POST - Route to add workout
@@ -133,7 +133,7 @@ def add_workout():
         new_workout = Workout(
             date=data.get("date"),
             duration_minutes=data.get("duration_minutes"),
-            notes=data.get("notes", False)
+            notes=data.get("notes")
         )
         db.session.add(new_workout)
         db.session.commit()
@@ -181,7 +181,7 @@ def add_workout_exercises(workout_id, exercise_id):
         message = {"error": f"No workout exists with id: {workout_id}"}
         return jsonify(message), 404
 
-    elif not exercise_id:
+    elif not exercise:
         message = {"error": f"No exercise exists with id: {exercise_id}"}
         return jsonify(message), 404
     else:

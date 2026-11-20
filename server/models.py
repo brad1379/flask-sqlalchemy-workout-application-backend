@@ -87,7 +87,7 @@ class Workout(db.Model):
     # Make sure the workout duration is between 15 mins and 4 hours.
     def validate_duration_minutes(self, key, duration_minutes):
         if duration_minutes < 15:
-            raise ValueError("Workout duration must be more than 5 minutes.")
+            raise ValueError("Workout duration must be more than 15 minutes.")
         if duration_minutes > 240:
             raise ValueError("Workout duration must be less than 240 minutes.")
         return duration_minutes

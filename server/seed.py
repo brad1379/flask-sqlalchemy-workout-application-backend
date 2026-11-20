@@ -25,7 +25,7 @@ with app.app_context():
 	workout1 = Workout(date=datetime.datetime(2026, 11, 6), duration_minutes=65, notes="Workout went really well. I feel refreshed")
 	workout2 = Workout(date=datetime.datetime(2026, 10, 21), duration_minutes=15, notes="Workout was short today, but at least I go something in!")
 	workout3 = Workout(date=datetime.datetime(2026, 10, 23), duration_minutes=90, notes="Long workout today, had to make up for the other day!")
-	workout4 = Workout(date=datetime.datetime(9999, 1, 1), duration_minutes=999, notes="TEST")
+	workout4 = Workout(date=datetime.datetime(9999, 1, 1), duration_minutes=120, notes="TEST")
 	db.session.add_all([workout1, workout2, workout3, workout4])
 	db.session.commit()
 
